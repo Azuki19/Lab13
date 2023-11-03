@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
       tareaContainer.querySelector(".X").addEventListener("click", function () {
         tareaContainer.remove();
   
-        // Eliminar la tarea del localStorage
+        // Eliminar la tarea
         const tareas = JSON.parse(localStorage.getItem("tareas")) || [];
         const tareaIndex = tareas.findIndex((t) => t.texto === tarea.texto);
         if (tareaIndex !== -1) {
@@ -52,6 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
       localStorage.setItem("tareas", JSON.stringify(tareas));
       tareaContainer.querySelector(".rojo").addEventListener("click", function () {
         if (tarea.estado === "doing") {
+
           // Mover tarea de Doing a To Do
           tarea.estado = "todo";
           const estadoContainer = document.getElementById("todo");
@@ -60,7 +61,7 @@ document.addEventListener("DOMContentLoaded", function () {
         actualizarEstadoTarea(tarea);
 
         if (tarea.estado === "done") {
-            // Mover tarea de Doing a To Do
+            // Mover tarea de Done a Doing
             tarea.estado = "doing";
             const estadoContainer = document.getElementById("doing");
             estadoContainer.appendChild(tareaContainer);
@@ -70,11 +71,13 @@ document.addEventListener("DOMContentLoaded", function () {
       
       tareaContainer.querySelector(".azul").addEventListener("click", function () {
         if (tarea.estado === "todo") {
+
           // Mover tarea de To Do a Doing
           tarea.estado = "doing";
           const estadoContainer = document.getElementById("doing");
           estadoContainer.appendChild(tareaContainer);
         } else if (tarea.estado === "doing") {
+          
           // Mover tarea de Doing a Done
           tarea.estado = "done";
           const estadoContainer = document.getElementById("done");
