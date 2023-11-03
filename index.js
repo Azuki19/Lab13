@@ -1,8 +1,11 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function() {
   const inputTarea = document.querySelector(".inputtarea");
   const publicarButton = document.querySelector(".publicar");
+  const todoContainer = document.getElementById("todo");
+  const doingContainer = document.getElementById("doing");
+  const doneContainer = document.getElementById("done");
 
-  publicarButton.addEventListener("click", function () {
+  publicarButton.addEventListener("click", function() {
     const tareaTexto = inputTarea.value.trim();
     if (tareaTexto !== "") {
       const tarea = {
@@ -34,8 +37,14 @@ document.addEventListener("DOMContentLoaded", function () {
       </div>
     `;
 
-    const estadoContainer = document.getElementById(tarea.estado);
-    estadoContainer.appendChild(tareaContainer);
+    // Agregar la tarea al contenedor adecuado según su estado
+    if (tarea.estado === "todo") {
+      todoContainer.appendChild(tareaContainer);
+    } else if (tarea.estado === "doing") {
+      doingContainer.appendChild(tareaContainer);
+    } else if (tarea.estado === "done") {
+      doneContainer.appendChild(tareaContainer);
+    }
 
     tareaContainer.querySelector(".X").addEventListener("click", function () {
       tareaContainer.remove();
@@ -56,18 +65,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Mover tarea de Doing a To Do
         tarea.estado = "todo";
-        const estadoContainer = document.getElementById("todo");
-        estadoContainer.appendChild(tareaContainer);
+        todoContainer.appendChild(tareaContainer);
       }
       actualizarEstadoTarea(tarea);
 
       if (tarea.estado === "done") {
-          // Mover tarea de Done a Doing
-          tarea.estado = "doing";
-          const estadoContainer = document.getElementById("doing");
-          estadoContainer.appendChild(tareaContainer);
-        }
-        actualizarEstadoTarea(tarea);
+        // Mover tarea de Done a Doing
+        tarea.estado = "doing";
+        doingContainer.appendChild(tareaContainer);
+      }
+      actualizarEstadoTarea(tarea);
     });
 
     tareaContainer.querySelector(".azul").addEventListener("click", function () {
@@ -75,14 +82,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Mover tarea de To Do a Doing
         tarea.estado = "doing";
-        const estadoContainer = document.getElementById("doing");
-        estadoContainer.appendChild(tareaContainer);
+        doingContainer.appendChild(tareaContainer);
       } else if (tarea.estado === "doing") {
 
         // Mover tarea de Doing a Done
         tarea.estado = "done";
-        const estadoContainer = document.getElementById("done");
-        estadoContainer.appendChild(tareaContainer);
+        doneContainer.appendChild(tareaContainer);
       }
       actualizarEstadoTarea(tarea);
     });
