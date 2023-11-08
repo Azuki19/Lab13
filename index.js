@@ -21,7 +21,6 @@ document.addEventListener("DOMContentLoaded", function() {
     const tareaContainer = document.createElement("div");
     tareaContainer.classList.add("tarea");
 
-    // Utiliza el texto de la tarea como identificador único
     const tareaId = tarea.texto;
 
     tareaContainer.innerHTML = `
@@ -37,7 +36,6 @@ document.addEventListener("DOMContentLoaded", function() {
       </div>
     `;
 
-    // Agregar la tarea al contenedor adecuado según su estado
     if (tarea.estado === "todo") {
       todoContainer.appendChild(tareaContainer);
     } else if (tarea.estado === "doing") {
@@ -48,14 +46,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
     tareaContainer.querySelector(".X").addEventListener("click", function () {
       tareaContainer.remove();
-
-      // Elimina la tarea del localStorage usando su identificador
+      
       const tareas = JSON.parse(localStorage.getItem("tareas")) || {};
       delete tareas[tareaId];
       localStorage.setItem("tareas", JSON.stringify(tareas));
     });
 
-    // Almacena la tarea en el localStorage con su identificador
+  
     const tareas = JSON.parse(localStorage.getItem("tareas")) || {};
     tareas[tareaId] = tarea;
     localStorage.setItem("tareas", JSON.stringify(tareas));
@@ -94,16 +91,15 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   function actualizarEstadoTarea(tarea) {
-    // Actualizar la tarea en el localStorage
+
     const tareas = JSON.parse(localStorage.getItem("tareas")) || {};
     tareas[tarea.texto] = tarea;
     localStorage.setItem("tareas", JSON.stringify(tareas));
   }
 
-  // Cargar las tareas desde el localStorage al inicio
+
   const tareasGuardadas = JSON.parse(localStorage.getItem("tareas")) || {};
 
-  // Itera sobre las tareas y agrégalas
   for (const tareaId in tareasGuardadas) {
     agregarTarea(tareasGuardadas[tareaId]);
   }
